@@ -1,0 +1,4 @@
+[
+{"version": 1.0, "hookid": [["Item",0],["Item",0],["Navigator",0],["StatusIndicator",0]], "name": "Navbar", "type": "QML"},
+{"version": 1.0, "hookid": [["Item",0]], "name": "Drawer", "type": "QML"}
+]

@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+pkgnames=(zeus)
+url="https://github.com/dutycyclefinfet/athena-launcher"
+pkgver=$(<version)
+timestamp=$(date +"%Y-%m-%dT%H:%M:%S%z")
+pkgdesc="Athena launcher"
+section="utils"
+maintainer="Lonely Transistor <lonelytransistor@protonmail.com>"
+installdepends=(athena-linux athena-hook)
+license=GPL-3.0-or-later
+image=qt:v2.2.2
+makedepends=()
+conflicts=()
+replaces=()
+
+source=()
+sha256sums=()
+
+prepare() {
+    git clone --depth 1 https://github.com/eclipse/mosquitto "${srcdir}"/Daemon/
+}
+
+build() {
+    cd "${srcdir}"/Daemon/mosquitto
+    cmake -DCMAKE_TOOLCHAIN_FILE=/usr/share/cmake/arm-linux-gnueabihf.cmake -DWITH_STATIC_LIBRARIES=ON -DWITH_CLIENTS=ON -DWITH_BROKER=OFF -DWITH_APPS=OFF -DDOCUMENTATION=OFF -DWITH_TLS=OFF
+    make -j$(nproc)
+    
+    cd "${srcdir}"/Daemon/
+    make -j$(nproc)
+}
+
+configure() {
+    if uname -r | grep athena > /dev/null ; then
+        systemctl daemon-reload
+        bash -c "sleep 10 && systemctl restart xochitl" &
+        disown
+    fi
+}
+
+function _install() {
+    if [ "$1" == "-r" ]; then
+        (
+            cd "${@:$#-1:1}"
+            for f in $(find . -type f); do
+                install -D "${@:2:$#-3}" "$f" "${@:$#}/$f"
+            done
+        )
+    else
+        install "$@"
+    fi
+}
+package() {
+    _install -r -m 755 -D "${srcdir}/Daemon/zeus" "${pkgdir}/usr/bin/xochitl.zeus"
+    _install -m 644 -D "${srcdir}/root/zeus.service" "${pkgdir}/lib/systemd/system/zeus.servicee"
+
+    _install -d "${pkgdir}/etc/systemd/system/zeus.service.d"
+    ln -s /etc/environments.d/athena.conf "${pkgdir}/etc/systemd/system/zeus.service.d/athena.conf"
+    _install -d "${pkgdir}/etc/environments.d/"
+    ln -s rm2fb-client.env "${pkgdir}/etc/environments.d/zeus.service"
+}

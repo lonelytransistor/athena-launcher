@@ -1,0 +1,17 @@
+# Copyright (c) 2020 The Toltec Contributors
+# SPDX-License-Identifier: MIT
+
+[Unit]
+Description=Launcher embedded into xochitl
+After=rm2fb.service xochitl.service
+StartLimitIntervalSec=600
+StartLimitBurst=4
+
+[Service]
+ExecStart=/usr/bin/xochitl.zeus
+Restart=on-failure
+RestartSec=5
+
+[Install]
+Alias=launcher.service
+WantedBy=multi-user.target

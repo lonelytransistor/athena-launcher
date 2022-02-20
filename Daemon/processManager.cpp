@@ -361,11 +361,11 @@ int ProcessManager::startApp(std::string appName, std::string appPath, bool isLa
         kill(getpid(), SIGSTOP);
         std::cout<<"Resumed"<<std::endl;
         if (isLauncher) {
-            const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin",
+            /*const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin",
                                   "LD_PRELOAD=/opt/lib/librm2fb_client.so:/usr/lib/libAthenaXochitl.so",
                                   "TZ=Europe/Berlin",
                                   NULL};
-            execl(appPath.c_str(), "", NULL, envp);
+            execl(appPath.c_str(), "", NULL, envp);*/
         } else {
             const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin",
                                   "LD_PRELOAD=/opt/lib/librm2fb_client.so",

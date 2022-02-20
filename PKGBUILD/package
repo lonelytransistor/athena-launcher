@@ -11,8 +11,8 @@ installdepends=(athena-linux athena-hook)
 license=GPL-3.0-or-later
 image=qt:v2.2.2
 makedepends=()
-conflicts=()
-replaces=()
+conflicts=(xochitl remux draft tarnish)
+replaces=(xochitl)
 
 source=()
 sha256sums=()
@@ -35,7 +35,7 @@ configure() {
     if uname -r | grep athena > /dev/null ; then
         systemctl daemon-reload
         systemctl enable zeus
-        bash -c "sleep 10 && systemctl restart xochitl && sleep 10 && systemctl start zeus" &
+        bash -c "wait $$ && sleep 1 && systemctl restart xochitl && sleep 10 && systemctl start zeus" &
         disown
     fi
 }
@@ -54,7 +54,9 @@ function _install() {
 }
 package() {
     _install -m 755 -D "${srcdir}/Daemon/zeus" "${pkgdir}/usr/bin/xochitl.zeus"
-    _install -m 644 -D "${srcdir}/root/zeus.service" "${pkgdir}/lib/systemd/system/zeus.servicee"
+    _install -m 644 -D "${srcdir}/root/zeus.service" "${pkgdir}/lib/systemd/system/zeus.service"
+    _install -m 644 -D "${srcdir}/root/xochitl.png" "${pkgdir}/opt/etc/draft/icons/xochitl.png"
+    _install -m 644 -D "${srcdir}/root/xochitl.draft" "${pkgdir}/opt/etc/draft/xochitl.draft"
 
     _install -d "${pkgdir}/etc/systemd/system/zeus.service.d"
     ln -s /etc/environments.d/athena.conf "${pkgdir}/etc/systemd/system/zeus.service.d/athena.conf"

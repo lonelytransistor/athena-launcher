@@ -52,7 +52,7 @@ function _install() {
     fi
 }
 package() {
-    _install -r -m 755 -D "${srcdir}/Daemon/zeus" "${pkgdir}/usr/bin/xochitl.zeus"
+    _install -m 755 -D "${srcdir}/Daemon/zeus" "${pkgdir}/usr/bin/xochitl.zeus"
     _install -m 644 -D "${srcdir}/root/zeus.service" "${pkgdir}/lib/systemd/system/zeus.servicee"
 
     _install -d "${pkgdir}/etc/systemd/system/zeus.service.d"

@@ -19,7 +19,7 @@ sha256sums=()
 
 prepare() {
     git clone --depth 1 https://github.com/lonelytransistor/athena-launcher "${srcdir}"/
-    git clone --depth 1 https://github.com/eclipse/mosquitto "${srcdir}"/Daemon/
+    git clone --depth 1 https://github.com/eclipse/mosquitto "${srcdir}"/Daemon/mosquitto
 }
 
 build() {

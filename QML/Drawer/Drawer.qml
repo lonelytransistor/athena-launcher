@@ -53,7 +53,7 @@ Rectangle {
                         }
                         Image {
                             id: icon_background
-                            source: "../_common/roundedBorder.svg"
+                            source: Icons.border.rounded
                             anchors.fill: parent
                             sourceSize.width: width
                             sourceSize.height: height
@@ -68,7 +68,7 @@ Rectangle {
                         }
                         Image {
                             id: icon_running
-                            source: "../_common/running.svg"
+                            source: Icons.modifier.running
                             anchors.top: parent.top
                             anchors.right: parent.right
                             width: parent.width*0.3

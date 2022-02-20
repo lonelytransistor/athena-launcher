@@ -364,20 +364,22 @@ int ProcessManager::startApp(std::string appName, std::string appPath, bool isLa
         }
         kill(getpid(), SIGSTOP);
         std::cout<<"Resumed"<<std::endl;
-        if (isLauncher) {
+        //if (isLauncher) {
             /*const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin",
                                   "LD_PRELOAD=/opt/lib/librm2fb_client.so:/usr/lib/libAthenaXochitl.so",
                                   "TZ=Europe/Berlin",
                                   NULL};
             execl(appPath.c_str(), "", NULL, envp);*/
-        } else {
-            /*const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin",
+        //} else {
+            const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin",
                                   "LD_PRELOAD=/opt/lib/librm2fb_client.so",
                                   "TZ=Europe/Berlin",
                                   NULL};
-            execle(appPath.c_str(), "", NULL, envp);*/
-            execl(appPath.c_str(), "");
-        }
+            std::cerr<<"Startup: "<<appPath.c_str()<<std::endl;
+            int ret = execle(appPath.c_str(), "", NULL, envp);
+            std::cerr<<"Startup failed: "<<ret<<strerror(errno)<<std::endl;
+            //execl(appPath.c_str(), "");
+        //}
         exit(1);
     }
     pd.name = appName;

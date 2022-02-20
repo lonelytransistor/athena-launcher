@@ -358,6 +358,10 @@ int ProcessManager::startApp(std::string appName, std::string appPath, bool isLa
         if (setpgid(0, 0)) {
             std::cerr<<"Fatal error!"<<strerror(errno)<<std::endl;
         }
+        if (appName == "xochitl") {
+            std::cerr<<"Prevented running xochitl!"<<std::endl;
+            exit(1);
+        }
         kill(getpid(), SIGSTOP);
         std::cout<<"Resumed"<<std::endl;
         if (isLauncher) {

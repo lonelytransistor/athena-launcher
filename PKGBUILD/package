@@ -35,7 +35,7 @@ configure() {
     if uname -r | grep athena > /dev/null ; then
         systemctl daemon-reload
         systemctl enable zeus
-        bash -c "wait $$ && sleep 1 && systemctl restart xochitl && sleep 10 && systemctl start zeus" &
+        bash -c "sleep 3 && systemctl restart xochitl && sleep 3 && systemctl start zeus" &
         disown
     fi
 }

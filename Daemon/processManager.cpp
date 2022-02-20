@@ -254,7 +254,7 @@ int ProcessManager::startLauncher() {
     }
     m_currentApp = "";
     m_launcherApp = "xochitl";
-    return startApp("xochitl", "/usr/bin/xochitl", false, xochitl_pid);
+    return startApp("xochitl", "/usr/bin/xochitl", true, xochitl_pid);
 }
 std::vector<std::string> ProcessManager::getApps() {
     std::unique_lock<std::mutex> lock(m_mutex);
@@ -367,11 +367,12 @@ int ProcessManager::startApp(std::string appName, std::string appPath, bool isLa
                                   NULL};
             execl(appPath.c_str(), "", NULL, envp);*/
         } else {
-            const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin",
+            /*const char *envp[] = {"PATH=/bin:/sbin/:/usr/bin:/usr/sbin:/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin",
                                   "LD_PRELOAD=/opt/lib/librm2fb_client.so",
                                   "TZ=Europe/Berlin",
                                   NULL};
-            execle(appPath.c_str(), "", NULL, envp);
+            execle(appPath.c_str(), "", NULL, envp);*/
+            execl(appPath.c_str(), "");
         }
         exit(1);
     }

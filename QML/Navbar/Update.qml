@@ -54,7 +54,7 @@ Rectangle {
     }
     Timer {
         id: updateTimer
-        interval: 3600000
+        interval: 5*60000
         repeat: true
         running: false
         triggeredOnStart: true

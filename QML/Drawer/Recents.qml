@@ -96,7 +96,7 @@ Rectangle {
                             anchors.leftMargin: 2
                             anchors.rightMargin: 2
                             asynchronous: true
-                            source: launcher ? Libraries.api.SettingsPrivate.lockscreen.template_path : "/tmp/_"+name+".jpg"
+                            source: launcher ? Libraries.api.SettingsPrivate.lockscreen.template_path : "/tmp/_"+name+".png"
                             mipmap: true
                         }
                     }

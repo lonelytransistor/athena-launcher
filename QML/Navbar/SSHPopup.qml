@@ -9,7 +9,7 @@ N.Popup {
     contentHeight: sshList.height
     width: 600
     
-    on: true
+    on: false
     onPressed: on=!on
     title: "Inhibit suspend\tSSH"
     icon: Icons.material.admin_panel_settings;
@@ -43,22 +43,26 @@ N.Popup {
                 height: sshList.cellHeight
                 Rectangle {
                     id: iconItem
-                    color: "#A0A0A0"
+                    border.width: 1
+                    border.color: "#808080"
+                    width: iconItemText.width*1.5
+                    height: parent.height*0.8
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
                         rightMargin: sshList.margin
                     }
                     Text {
+                        id: iconItemText
                         anchors.centerIn: parent
                         text: Icons.material.remove_circle_outline
                         font.family: Fonts.material.name
-                        font.pixelSize: parent.height*0.35
+                        font.pixelSize: parent.height*0.8
                     }
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (pid != -1) {
+                            if (pid > 0) {
                                 AthenaSystem.kill(pid);
                             }
                         }
@@ -75,6 +79,17 @@ N.Popup {
                     }
                     text: label
                     font.pixelSize: parent.height*0.35
+                }
+                Rectangle {
+                    color: "#000000"
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                        leftMargin: sshList.margin*0.5
+                        rightMargin: sshList.margin*0.5
+                    }
+                    height: 1
                 }
             }
         }

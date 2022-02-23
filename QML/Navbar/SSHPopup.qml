@@ -9,7 +9,7 @@ N.Popup {
     contentHeight: sshList.height
     width: 600
     
-    on: false
+    on: true
     onPressed: on=!on
     title: "Inhibit suspend\tSSH"
     icon: Icons.material.admin_panel_settings;
@@ -31,29 +31,37 @@ N.Popup {
         onOptionsChanged: {
             listView.model.clear()
             for (var i=0; i<options.length; i++) {
-                listView.model.append({ix: i, label: options[i], pid: options[i].match(/([0-9]+):/)[1]});
+                let pid_m = options[i].match(/([0-9]+):/);
+                pid_m = pid_m.length>1 ? pid_m[1] : -1;
+                listView.model.append({ix: i, label: options[i], pid: pid_m});
             }
         }
         Component {
-            id: radioDelegate
+            id: sshListDelegate
             Rectangle {
                 width: listView.width
                 height: sshList.cellHeight
                 Rectangle {
                     id: iconItem
+                    color: "#A0A0A0"
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
+                        rightMargin: sshList.margin
                     }
                     Text {
                         anchors.centerIn: parent
-                        text: Icons.material.remove
+                        text: Icons.material.remove_circle_outline
                         font.family: Fonts.material.name
                         font.pixelSize: parent.height*0.35
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: AthenaSystem.killSSH(pid);
+                        onClicked: {
+                            if (pid != -1) {
+                                AthenaSystem.kill(pid);
+                            }
+                        }
                     }
                 }
                 Text {
@@ -78,7 +86,7 @@ N.Popup {
             spacing: 10
             model: ListModel {}
             interactive: false
-            delegate: radioDelegate
+            delegate: sshListDelegate
         }
     }
 }

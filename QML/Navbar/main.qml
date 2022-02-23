@@ -59,10 +59,9 @@ Rectangle {
         layoutDirection: Qt.LeftToRight
         spacing: 10
         
-        N.Update {
-        }
-        N.HASS {
-        }
+        N.Update {}
+        N.SSH {}
+        //N.HASS {}
     }
     Row {
         id: navButtons

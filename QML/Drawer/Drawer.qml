@@ -39,7 +39,7 @@ Rectangle {
                         anchors.fill: parent
                         Image {
                             id: icon_image
-                            source: imgFile
+                            source: imgFile ? imgFile : Icons.empty.application
                             anchors.fill: parent
                             mipmap: true
                             asynchronous: true
